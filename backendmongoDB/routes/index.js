@@ -1,13 +1,8 @@
 var express = require('express');
 var router = express.router();
-require('dotenv').config();
 
-var mongoose = require('mongoose');
-mongoose.connect()
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.status(200).json('Hello!');
+// Gets triggered when index url is hit
+router.get('/', (req, res, next)=>{
+    console.log('Hello World!');
+    res.status(200).json('Hello world!');
 });
-
-module.exports = router;
