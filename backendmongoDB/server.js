@@ -1,35 +1,33 @@
 //Initialize and use express to create the app
-var express = require('express');
-var app = express();
-var cors = require('cors');
-var bodyParser = require('body-parser');
-
-//Use middlewares
-//express/bodyparser.json() to parse request body
-app.use(express.json());
-app.use(cors());
-app.use(bodyParser.json());
-
+const express = require('express'),
+      app = express(),
+      cors = require('cors'),
+      util = require('./util/util');
 // Configure dot-env
 require('dotenv').config();
 
-//Configure routers
-var indexRouter = require('./routes/index');
-var productRouter = require('./routes/product');
-//var allProductsRouter = require('./routes/products');
-app.use('/', indexRouter);
-app.use('/product', productRouter);
-//app.use('/products', allProductsRouter);
+//Use middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+
+//Entry point logger
+//This logs out every request sent to the server
+app.use(function(req, res, next){
+  util.log(req);
+  next();
+});
+
+//Configure all routers
+app.use('/', require('./routes/index'));
+app.use('/product', require('./routes/product'));
+app.use('/products', require('./routes/products'));
 
 // import mongoose and connect to db
 const mongoose = require('mongoose');
 const uri = process.env.ATLAS_DB_URI;
 const db = mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, ()=>{
   console.log(`${new Date()} : Connected to db..`);  
-});
-
-app.post('/', function(req, res, next){
-  console.log(`from server.js ${req.body.name}`);
 });
 
 //Start the server
