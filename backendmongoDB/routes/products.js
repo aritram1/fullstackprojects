@@ -3,7 +3,7 @@ const express = require('express'),
       router = express.Router(),
       mongoose = require('mongoose'),
       Product = require('../model/product-model'),
-      util = require('../util/util');
+      util = require('../util/util'); 
 
 /* GET all products */
 router.get('/', (req, res, next)=>{
@@ -17,8 +17,8 @@ router.get('/', (req, res, next)=>{
   })
   .catch(error=> {
       res.status(404).json({
-          error: `${error}`, 
-          msg: 'Some error occurred to fetch all products'
+          message: 'Some error occurred to fetch all products',
+          error: `${error}`
       });
   });
 });

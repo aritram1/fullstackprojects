@@ -16,12 +16,12 @@ router.post('/create', (req, res, next)=>{
         };
         new Product(prod).save()
         .then(result=>{
-            res.status(200).json(result);
+            res.status(200).json(util.transformSingle(result));
         }) 
         .catch(error=> {
             res.status(404).json({
                 message: 'Can not save the record',
-                error: error.message
+                error: error.message  
             });
         });
     }
@@ -40,7 +40,7 @@ router.get('/:id', (req, res, next)=>{
     res.status(200).json(result);
   })
   .catch(error=> {
-    console.log(`Some error occurred : ${error}`);
+    console.log(`Some error occurred : ${error}`); 
     res.status(404).json({
         error: error,
         msg: `Some error occurred to retrieve the product with id ${id}`

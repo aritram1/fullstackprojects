@@ -3,18 +3,22 @@ class util{
     // A utility method to transform each record in the response
     static transform(result){
         var records = [];
-        if(result.length > 0){
+        console.log('result.length->' + result.length); 
+        if(result.length > 0){ 
             for(let each of result){
-                var record = {
-                    id: each._id,
-                    name: each.name ? each.name :   'No name',
-                    price: each.price ? each.price : 0.00,
-                    costly: each.price > 100 ? 'Yes' : 'No'
-                }
-                records.push(record);
+                records.push(util.transformSingle(each));   
             }
         }
         return records;
+    }
+
+    static transformSingle(each){
+        return {
+            id: each._id,
+            name: each.name ? each.name : 'No name',
+            price: each.price ? each.price : 0.00,
+            costly: each.price > 100 ? 'Yes' : 'No'
+        }
     }
 
     static log(req){
