@@ -32,20 +32,35 @@ router.post('/create', (req, res, next)=>{
 
 //Get details of the product with product id
 router.get('/:id', (req, res, next)=>{
-  const productId = req.params.id;
-  console.log('id is' + productId);
-  Product.findById(productId)
-  .then(result=>{
-    console.log(productId + ' retrieved!');
-    res.status(200).json(result);
-  })
-  .catch(error=> {
-    console.log(`Some error occurred : ${error}`); 
-    res.status(404).json({
-        error: error,
-        msg: `Some error occurred to retrieve the product with id ${id}`
+    const productId = req.params.id;
+    console.log('id is' + productId);
+    Product.findById(productId)
+    .then(result=>{
+        console.log(productId + ' retrieved!');
+        res.status(200).json(util.transformSingle(result));
+    })
+    .catch(error=> {
+        res.status(404).json({
+            error: error,
+            msg: `Some error occurred to retrieve the product with id ${productId}`
+        }); 
     });
-  });
+});
+
+//Delete a product with product productId
+router.delete('/:id', (req, res, next)=>{
+    const productId = req.params.id;
+    console.log('id is' + productId);
+    Product.deleteOne(productId)
+    .then(result=>{
+        res.status(200).json(result); 
+    })
+    .catch(error=> {
+        res.status(404).json({
+            error: error,
+            msg: `Some error occurred to delete the product with id ${productId}`
+        }); 
+    });
 });
 
 module.exports = router;

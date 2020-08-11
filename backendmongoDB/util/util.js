@@ -17,11 +17,11 @@ class util{
             id: each._id,
             name: each.name ? each.name : 'No name',
             price: each.price ? each.price : 0.00,
-            costly: each.price > 100 ? 'Yes' : 'No'
+            costly: each.price > 100 ? 'Yes' : 'No' 
         }
     }
 
-    static log(req){
+    static log(req){ 
         console.log(`${new Date()} : ${req.method} request received at ${req.path} from ${req.hostname}`);
     }
 }
